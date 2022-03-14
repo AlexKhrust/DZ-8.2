@@ -1,54 +1,59 @@
 ﻿#include <iostream>
 #include <time.h>
 using namespace std;
-int* m = new int[4];
-int* q = new int[4];
-static int sproba = 0;
-int* randNumber()
-{
-    for (int i = 0; i < 4; i++)
-        *(m + i) = rand() % 10;
-    return m;
+
+const int size1 = 4; //размер массива того что загадывает прога
+const int size2 = 4; //размер массива того что загадывает человек
+int arr1[size1], arr2[size2];   //создание массивов
+int num, cow = 0, bull = 0;
+
+int randNumber(int a[], int b) {    //заполнение массива числа от компа
+    for (int i = 0; i < b; i++) {
+        a[i] = rand() % 10;
+    }
+    return 0;
 }
-int* digits(int n)
-{
-    for (int i = 3; i >= 0; i--)
-    {
-        *(q + i) = n % 10;
+
+int digits(int a[], int b, int n) { //заполнение массива числом введенным пользователем
+    for (int i = 3; i >= 0; i--) {
+        a[i] = n % 10;
         n /= 10;
     }
-    return q;
+    return 0;
 }
-void Count(int* x, int* y, int n, int* bull, int* cow)
-{
-    *bull = *cow = 0;
-    for (int i = 0; i < n; i++)
-        if (*(x + i) == *(y + i))
-            (*bull)++;
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            if ((*(x + i) == *(y + j)) && (i != j))
-                (*cow)++;
+
+void Count(int a[], int s1, int b[], int s2) {
+    for (int i = 0; i < s1; i++) {
+        if (a[i] == b[i]) cow++;
+    }
+
+    for (int i = 0; i < s1; i++) {  //КОСЯК ГДЕ-ТО ЗДЕСЬ
+        for (int j = 0; j < s2; i++) {
+            if ((a[i] == b[j])&&(i!=j)) bull++;
+        }
+    }
 }
-void game(int* r, int* N)
-{
-    *N = sproba;
-    cout << "Input your number: ";
-    int number;
-    cin >> number;
-    int* b = digits(number);
-    int bull, cow;
-    Count(r, b, 4, &bull, &cow);
-    cout << "Bulls = " << bull << ", cows = " << cow << endl;
-    sproba++;
-    if (bull == 4) cout << "OK!\n";
-    else game(r, N);
+
+void game() {                       //тело игры
+    cout << "Введите четырехзначное число: ";
+    cin >> num;
+    digits(arr2, size2, num);
+    
+    Count(arr1, size1, arr2, size2);
+
+    cout << "Быков = " << bull << ", Коров = " << cow << endl;
 }
+
+
 void main()
 {
-    int m = 0;
+    setlocale(LC_ALL, "rus");
     srand(time(NULL));
-    int* a = randNumber();
-    game(a, &m);
-    cout << "Winning in " << m << " moves!\n";
+
+    randNumber(arr1, size1);
+    game();
+
+  /*  for (int i = 0; i < size1; i++) {
+        cout << arr2[i]<<" ";
+    }*/
 }
