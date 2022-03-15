@@ -27,9 +27,9 @@ void Count(int a[], int s1, int b[], int s2) {
         if (a[i] == b[i]) cow++;
     }
 
-    for (int i = 0; i < s1; i++) {  //КОСЯК ГДЕ-ТО ЗДЕСЬ
-        for (int j = 0; j < s2; i++) {
-            if ((a[i] == b[j])&&(i!=j)) bull++;
+    for (int i = 0; i < s1; i++) {
+        for (int j = 0; j < s2; j++) {
+            if (a[i] == b[j]) bull++;
         }
     }
 }
@@ -51,9 +51,10 @@ void main()
     srand(time(NULL));
 
     randNumber(arr1, size1);
-    game();
+    
 
-  /*  for (int i = 0; i < size1; i++) {
-        cout << arr2[i]<<" ";
-    }*/
+    //for (int i = 0; i < size1; i++) {
+    //    cout << arr1[i]<<" ";
+    //}
+    game();
 }
